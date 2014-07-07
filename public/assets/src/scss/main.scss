@@ -1,0 +1,86 @@
+@import 'libs/bootstrap/bootstrap.scss';
+@import 'blocks/header.scss';
+
+$header_background: #090909;
+$header_color: #FFF;
+$sidebar_background: #F1F1F1;
+$main_background: #FFFFFF;
+
+@mixin gradient($from:#545454, $to:#222222) {
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, $from),
+		color-stop(1, $to)
+		);
+	background-image: -o-linear-gradient(bottom, $from 0%, $to 100%);
+	background-image: -moz-linear-gradient(bottom, $from 0%, $to 100%);
+	background-image: -webkit-linear-gradient(bottom, $from 0%, $to 100%);
+	background-image: -ms-linear-gradient(bottom, $from 0%, $to 100%);
+	background-image: linear-gradient(to bottom, $from 0%, $to 100%);
+}
+
+body {
+	
+	a,a:hover, a:active, a:focus {
+	   outline: 0;
+	}
+
+	background: $sidebar_background;
+
+	> .navbar {
+		margin-bottom: 0;
+		@include gradient();
+	}
+
+	> .page-header {
+		@include gradient(#090909,#222222);
+		color: $header_color;
+		margin: 0;
+		padding: 10px;
+		overflow: hidden;
+
+		> h1 {
+			margin: 5px 0 0 0;
+		}
+	}
+
+	> .wrapper {
+		overflow: hidden;
+
+		> div {
+			padding: 10px;
+
+			&#main {
+				background: $main_background;
+				overflow: hidden;
+			}
+
+			&#sidebar {
+				> .btn-group-vertical {
+					display: block;
+
+					.btn {
+						text-align: left;
+					}
+
+					.caret {
+						float: right;
+						margin-top: 8px;
+					}
+
+					.badge {
+						float: right;
+						display: block;
+						margin-right: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	.tab-content {
+		padding: 10px 0;
+	}
+}

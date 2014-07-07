@@ -13,10 +13,26 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return Redirect::action('Toomdrix\\Pm\\DoorstepController@getIndex');
 });
 
-Route::get('users', function()
-{
-    return 'Users!';
+Route::group(array('before'=>array('auth','permission'),'namespace' => 'Toomdrix\Pm'), function() {
+	Route::resource('dashboard', 'DashboardController');
+	Route::resource('user', 'UserController');
+	Route::resource('usergroup', 'UsergroupController');
+	Route::resource('company', 'CompanyController');
+	Route::resource('project', 'ProjectController');
+
+	Route::resource('task', 'TaskController');
+	Route::resource('milestone', 'MilestoneController');
+	Route::resource('message', 'MessageController');
+	Route::resource('file', 'FileController');
+	Route::resource('time', 'TimeController');
 });
+
+Route::controller('doorstep', 'Toomdrix\\Pm\\DoorstepController');
+
+View::composer('block.sidebar.project.list', 'Toomdrix\\Pm\\SidebarProjectListComposer');
+View::composer('user.form', 'Toomdrix\\Pm\\UserCreateFormComposer');
+View::composer('project.form', 'Toomdrix\\Pm\\ProjectCreateFormComposer');
+View::composer('task.form', 'Toomdrix\\Pm\\TaskCreateFormComposer');

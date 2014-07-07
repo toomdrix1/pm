@@ -19,6 +19,38 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
+	public function getPrimaryInfo() {
+		return array(
+				'Name'=> array(
+					'text'  => $this->full_name,
+					'link'  => '/user/'.$this->id,
+					'modal' => false
+					),
+				'Company' => array(
+					'text'  => $this->company->name,
+					'link'  => '/company/'.$this->company->id,
+					'modal' => true
+					),
+				'Email' => array('text'=>$this->email),
+				'Actions'=> array('text'=>\View::make('user.list.actions')->with('id',$this->id))
+			);
+	}
+
+	public function getFullNameAttribute()
+    {
+        return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
+    }
+
+	public function company()
+    {
+        return $this->belongsTo('Toomdrix\Pm\Company');
+    }
+
+    public function usergroup()
+    {
+        return $this->belongsTo('Toomdrix\Pm\Usergroup');
+    }
+
 	/**
 	 * Get the unique identifier for the user.
 	 *

@@ -13,13 +13,13 @@
 
 App::before(function($request)
 {
-	//
+	
 });
 
 
 App::after(function($request, $response)
 {
-	//
+	
 });
 
 /*
@@ -33,9 +33,17 @@ App::after(function($request, $response)
 |
 */
 
+Route::filter('permission', function()
+{
+	if (Auth::user()->usergroup->denied(Route::currentRouteName())) {
+		\Flash::push('warning', 'You do not have access to the resource you have requested');
+		return \Redirect::to('dashboard');
+	}
+});
+
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if (Auth::guest()) return Redirect::guest('/');
 });
 
 
